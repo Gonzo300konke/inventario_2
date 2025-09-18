@@ -1,9 +1,8 @@
 <?php
 
-
-
 namespace App\Models;
 
+use App\Enums\EstadoBien;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
@@ -11,10 +10,10 @@ class Bien extends Model
 {
     use HasFactory;
 
+    // Tabla asociada
     protected $table = 'bienes';
 
-
-
+    // Atributos asignables en masa
     protected $fillable = [
         'dependencia_id',
         'responsable_id',
@@ -25,6 +24,7 @@ class Bien extends Model
         'fecha_registro',
     ];
 
+    // Casts automáticos
     protected $casts = [
         'fecha_registro' => 'datetime',
         'estado' => EstadoBien::class, // Enum PHP 8.1+
@@ -46,3 +46,4 @@ class Bien extends Model
         return $this->hasMany(Movimiento::class);
     }
 }
+

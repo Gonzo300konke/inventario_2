@@ -17,7 +17,7 @@ class BienController extends Controller
         // Incluimos relaciones para evitar N+1
         $bienes = Bien::with(['dependencia', 'responsable', 'movimientos'])->paginate(10);
 
-        return response()->json($bienes);
+        return view('bienes.index', compact('bienes'));
     }
 
     /**
