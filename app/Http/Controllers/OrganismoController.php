@@ -11,13 +11,12 @@ class OrganismoController extends Controller
     /**
      * Listar todos los organismos.
      */
-    public function index()
-    {
-        // Incluimos la relación para evitar N+1
-        $organismos = Organismo::with('unidadesAdministradoras')->paginate(10);
+   public function index()
+{
+    $organismos = Organismo::paginate(10);
+    return view('organismos.index', compact('organismos'));
+}
 
-        return response()->json($organismos);
-    }
 
     /**
      * Guardar un nuevo organismo.

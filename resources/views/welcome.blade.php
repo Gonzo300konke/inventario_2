@@ -1,121 +1,48 @@
-@extends('layouts.app')
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Menú Base</title>
+    @vite(['resources/css/app.css', 'resources/js/app.js'])
+</head>
+<body class="bg-gray-100 min-h-screen">
 
-@section('content')
-<div class="container">
-    <h1>Listado de Bienes</h1>
+    <!-- Navbar -->
+    <nav class="bg-blue-600 text-white shadow">
+        <div class="max-w-7xl mx-auto px-4">
+            <div class="flex justify-between items-center h-16">
+                <!-- Logo -->
+                <div class="flex-shrink-0 text-xl font-bold">
+                    🚀 Mi Proyecto
+                </div>
 
-    <!-- Formulario para crear nuevo bien -->
-    <form id="bien-form">
-        @csrf
-        <div class="mb-3">
-            <label for="codigo" class="form-label">Código</label>
-            <input type="text" class="form-control" id="codigo" name="codigo" required>
+                <!-- Links -->
+                <div class="hidden md:flex space-x-6">
+                    <a href="{{ url('/') }}" class="hover:text-gray-200">Inicio</a>
+                    <a href="{{ route('organismos.index') }}" class="hover:text-gray-200">Organismos</a>
+                    <a href="#" class="hover:text-gray-200">Usuarios</a>
+                    <a href="#" class="hover:text-gray-200">Reportes</a>
+                </div>
+
+                <!-- Botón de login/acción -->
+                <div>
+                    <a href="#"
+                       class="bg-white text-blue-600 px-4 py-2 rounded-lg font-semibold hover:bg-gray-100 transition">
+                        Ingresar
+                    </a>
+                </div>
+            </div>
         </div>
-        <div class="mb-3">
-            <label for="descripcion" class="form-label">Descripción</label>
-            <input type="text" class="form-control" id="descripcion" name="descripcion" required>
-        </div>
-        <div class="mb-3">
-            <label for="ubicacion" class="form-label">Ubicación</label>
-            <input type="text" class="form-control" id="ubicacion" name="ubicacion">
-        </div>
-        <div class="mb-3">
-            <label for="estado" class="form-label">Estado</label>
-            <select class="form-select" id="estado" name="estado" required>
-                <option value="activo">Activo</option>
-                <option value="inactivo">Inactivo</option>
-                <option value="dado_de_baja">Dado de baja</option>
-            </select>
-        </div>
-        <div class="mb-3">
-            <label for="fecha_registro" class="form-label">Fecha de Registro</label>
-            <input type="date" class="form-control" id="fecha_registro" name="fecha_registro" required>
-        </div>
-        <button type="submit" class="btn btn-primary">Guardar Bien</button>
-    </form>
+    </nav>
 
-    <hr>
+    <!-- Contenido principal -->
+    <main class="flex flex-col items-center justify-center py-20">
+        <h1 class="text-4xl font-bold text-gray-800 mb-4">Bienvenido a tu aplicación Laravel</h1>
+        <p class="text-lg text-gray-600">Este es un menú base con Tailwind + Vite</p>
+    </main>
 
-    <!-- Tabla de bienes -->
-    <table class="table table-bordered mt-4" id="bienes-table">
-        <thead>
-            <tr>
-                <th>ID</th>
-                <th>Código</th>
-                <th>Descripción</th>
-                <th>Ubicación</th>
-                <th>Estado</th>
-                <th>Fecha Registro</th>
-                <th>Acciones</th>
-            </tr>
-        </thead>
-        <tbody></tbody>
-    </table>
-</div>
+</body>
+</html>
 
-<script>
-document.addEventListener('DOMContentLoaded', function () {
-    const form = document.getElementById('bien-form');
-    const tableBody = document.querySelector('#bienes-table tbody');
-
-    // Cargar bienes
-    fetch('/api/bienes')
-        .then(res => res.json())
-        .then(data => {
-            data.data.forEach(bien => {
-                const row = `
-                    <tr>
-                        <td>${bien.id}</td>
-                        <td>${bien.codigo}</td>
-                        <td>${bien.descripcion}</td>
-                        <td>${bien.ubicacion || ''}</td>
-                        <td>${bien.estado}</td>
-                        <td>${bien.fecha_registro}</td>
-                        <td>
-                            <button class="btn btn-danger btn-sm" onclick="eliminarBien(${bien.id})">Eliminar</button>
-                        </td>
-                    </tr>
-                `;
-                tableBody.innerHTML += row;
-            });
-        });
-
-    // Crear bien
-    form.addEventListener('submit', function (e) {
-        e.preventDefault();
-        const formData = new FormData(form);
-
-        fetch('/api/bienes', {
-            method: 'POST',
-            headers: {
-                'Accept': 'application/json'
-            },
-            body: formData
-        })
-        .then(res => res.json())
-        .then(data => {
-            alert('Bien creado correctamente');
-            location.reload();
-        })
-        .catch(err => console.error(err));
-    });
-});
-
-// Eliminar bien
-function eliminarBien(id) {
-    if (!confirm('¿Estás seguro de eliminar este bien?')) return;
-
-    fetch(`/api/bienes/${id}`, {
-        method: 'DELETE',
-        headers: {
-            'Accept': 'application/json'
-        }
-    })
-    .then(() => {
-        alert('Bien eliminado');
-        location.reload();
-    });
-}
-</script>
-@endsection
 
