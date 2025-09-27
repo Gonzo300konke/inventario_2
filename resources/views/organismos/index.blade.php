@@ -6,6 +6,16 @@
     <title>Organismos</title>
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 </head>
+<body class="bg-gray-100 min-h-screen">
+
+    @include('layouts.head')
+
+    <main class="max-w-7xl mx-auto px-4 py-10">
+        <!-- contenido de la página -->
+    </main>
+
+</body>
+
 <body class="bg-gray-100 min-h-screen flex flex-col items-center py-10">
 
     <div class="w-full max-w-4xl bg-white shadow rounded-lg p-6">

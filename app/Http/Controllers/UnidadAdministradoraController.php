@@ -11,13 +11,13 @@ class UnidadAdministradoraController extends Controller
     /**
      * Listar todas las Unidades Administradoras.
      */
-    public function index()
-    {
-        // Incluimos la relación con organismo y dependencias para evitar N+1
-        $unidades = UnidadAdministradora::with(['organismo', 'dependencias'])->paginate(10);
+   public function index()
+{
+    $unidades = UnidadAdministradora::with(['organismo', 'dependencias'])->paginate(10);
 
-        return response()->json($unidades);
-    }
+    return view('unidades.index', compact('unidades'));
+}
+
 
     /**
      * Guardar una nueva Unidad Administradora.

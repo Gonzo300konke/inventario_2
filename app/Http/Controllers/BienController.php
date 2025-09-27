@@ -12,12 +12,21 @@ class BienController extends Controller
     /**
      * Listar todos los bienes.
      */
-    public function index()
-    {
-        // Incluimos relaciones para evitar N+1
-        $bienes = Bien::with(['dependencia', 'responsable', 'movimientos'])->paginate(10);
+  // BienController.php
+public function index()
+{
+    // Incluimos relaciones para evitar N+1
+    $bienes = Bien::with(['dependencia', 'responsable', 'movimientos'])->paginate(10);
 
-        return view('bienes.index', compact('bienes'));
+    return view('bienes.index', compact('bienes')); // Only passes $bienes
+}
+
+    /**
+     * Mostrar formulario de creación.
+     */
+    public function create()
+    {
+        return view('bienes.create');
     }
 
     /**
@@ -37,7 +46,9 @@ class BienController extends Controller
 
         $bien = Bien::create($validated);
 
-        return response()->json($bien, 201);
+        return redirect()
+            ->route('bienes.index')
+            ->with('success', 'Bien creado correctamente.');
     }
 
     /**
@@ -47,7 +58,15 @@ class BienController extends Controller
     {
         $bien->load(['dependencia', 'responsable', 'movimientos']);
 
-        return response()->json($bien);
+        return view('bienes.show', compact('bien'));
+    }
+
+    /**
+     * Mostrar formulario de edición.
+     */
+    public function edit(Bien $bien)
+    {
+        return view('bienes.edit', compact('bien'));
     }
 
     /**
@@ -72,7 +91,9 @@ class BienController extends Controller
 
         $bien->update($validated);
 
-        return response()->json($bien);
+        return redirect()
+            ->route('bienes.index')
+            ->with('success', 'Bien actualizado correctamente.');
     }
 
     /**
@@ -82,7 +103,10 @@ class BienController extends Controller
     {
         $bien->delete();
 
-        return response()->json(null, 204);
+        return redirect()
+            ->route('bienes.index')
+            ->with('success', 'Bien eliminado correctamente.');
     }
 }
+
 

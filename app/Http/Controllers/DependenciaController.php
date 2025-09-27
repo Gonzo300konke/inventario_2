@@ -11,13 +11,12 @@ class DependenciaController extends Controller
     /**
      * Listar todas las dependencias.
      */
-    public function index()
-    {
-        // Incluimos relaciones para evitar N+1
-        $dependencias = Dependencia::with(['unidadAdministradora', 'bienes'])->paginate(10);
+  public function index()
+{
+    $dependencias = Dependencia::with(['unidadAdministradora', 'bienes'])->paginate(10);
+    return view('dependencias.index', compact('dependencias'));
+}
 
-        return response()->json($dependencias);
-    }
 
     /**
      * Guardar una nueva dependencia.
