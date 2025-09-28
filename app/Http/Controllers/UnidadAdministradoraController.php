@@ -1,7 +1,7 @@
 <?php
 
 namespace App\Http\Controllers;
-
+use App\Models\Organismo;
 use App\Models\UnidadAdministradora;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
@@ -17,6 +17,24 @@ class UnidadAdministradoraController extends Controller
 
     return view('unidades.index', compact('unidades'));
 }
+
+
+public function create()
+{
+    // Cargar los organismos para el select
+    $organismos = Organismo::all();
+
+    // Retornar la vista del formulario
+    return view('unidades.create', compact('organismos'));
+}
+
+public function edit(UnidadAdministradora $unidadAdministradora)
+{
+    $organismos = Organismo::all();
+
+    return view('unidades.edit', compact('unidadAdministradora', 'organismos'));
+}
+
 
 
     /**
@@ -76,4 +94,7 @@ class UnidadAdministradoraController extends Controller
         return response()->json(null, 204);
     }
 }
+
+
+
 

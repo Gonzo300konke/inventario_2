@@ -1,7 +1,7 @@
 <?php
 
 namespace App\Http\Controllers;
-
+use App\Models\UnidadAdministradora;
 use App\Models\Dependencia;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
@@ -33,6 +33,21 @@ class DependenciaController extends Controller
 
         return response()->json($dependencia, 201);
     }
+
+
+
+    public function create()
+    {
+        $unidadesAdministradoras = UnidadAdministradora::all();
+
+        // La vista espera $unidades
+        return view('dependencias.create', [
+            'unidades' => $unidadesAdministradoras,
+        ]);
+    }
+
+
+
 
     /**
      * Mostrar una dependencia específica.
